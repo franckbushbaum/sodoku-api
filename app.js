@@ -3,7 +3,7 @@ const solveButton = document.querySelector('#solve-button')
 const solutionDisplay = document.querySelector('#solution')
 const squares = 81
 
-const submission = []
+let submission = []
 
 for (let i = 0; i < squares; i++) {
     const inputElement = document.createElement('input')
@@ -45,33 +45,33 @@ const populateValues = (solution, solvable) => {
         })
         solutionDisplay.innerHTML = 'This is the answer'
     } else {
-        solutionsDisplay.innerHTML = 'This is not solvable'
+        solutionDisplay.innerHTML = 'This is not solvable'
     }
 }
 
+//1 Goes to /solve, triggers post request on the back-end(server.js)
+
 const solve = () => {
     joinValues()
-    const data = submission.join('')
-    console.log(data)
-    var options = {
-        method: 'POST',
-        url: 'https://solve-sudoku.p.rapidapi.com/',
-        headers: {
-            'content-type': 'application/json',
-            'x-rapidapi-host': 'solve-sudoku.p.rapidapi.com',
-            'x-rapidapi-key': process.env.RAPID_API_KEY
-        },
-        data: {
-            puzzle: data
-        }
-    };
+    const data = {numbers: submission.join('')}
+    console.log('data', data)
 
-    axios.request(options).then((response) => {
-        console.log(response.data);
-        populateValues(response.data.solution, response.data.solvable)
-    }).catch((error) => {
-        console.error(error);
-    });
+    fetch('http://localhost:5000/solve', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(response => response.json())
+      .then(data =>  {
+          console.log(data);
+          populateValues(data.solution, data.solvable)
+          submission = []
+      })
+      .catch((error) => {
+          console.error('Error:', error)
+      })
 }
 
 
