@@ -6,8 +6,8 @@
 
 ### I found this API from [RapidAPI](https://www.rapidapi.com)
 
-###The back-end will be built using:
-- axios
-- express
-- cors
+### The back-end will be built using:
+### - axios
+### - express
+### - cors
 
