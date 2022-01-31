@@ -11,3 +11,11 @@
 ### - express
 ### - cors
 
+### It works!
+
+![alt text](https://media1.giphy.com/media/mP8iofpJFor5jVcMdg/giphy.gif)
+
+#### This logic to style the board tho.
+
+![alt text](logic.png)
+
